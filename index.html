@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoho User Guide - Company Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 300px;
+            background-color: #2d3436;
+            color: white;
+            padding: 30px 20px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #d63031;
+        }
+
+        .sidebar .subtitle {
+            font-size: 14px;
+            color: #b2bec3;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #636e72;
+            padding-bottom: 15px;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+        }
+
+        .sidebar nav ul li {
+            margin-bottom: 4px;
+        }
+
+        .sidebar nav ul li a {
+            color: #dfe6e9;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .sidebar nav ul li a:hover {
+            background-color: #636e72;
+            color: #ffffff;
+        }
+
+        .sidebar nav ul li a.active {
+            background-color: #d63031;
+            color: white;
+        }
+
+        /* Sub-section navigation */
+        .sidebar nav ul li.has-subsections > a {
+            cursor: pointer;
+        }
+
+        .sidebar nav ul li.has-subsections > a .expand-icon {
+            transition: transform 0.3s;
+            font-size: 12px;
+            padding: 4px 6px;
+            margin-left: auto;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .sidebar nav ul li.has-subsections > a .expand-icon:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar nav ul li.has-subsections.expanded > a .expand-icon {
+            transform: rotate(90deg);
+        }
+
+        .sidebar nav ul.subsections {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            margin-left: 15px;
+            margin-top: 4px;
+            border-left: 2px solid #636e72;
+            padding-left: 10px;
+        }
+
+        .sidebar nav ul li.expanded > ul.subsections {
+            max-height: 500px;
+        }
+
+        .sidebar nav ul.subsections li {
+            margin-bottom: 2px;
+        }
+
+        .sidebar nav ul.subsections li a {
+            font-size: 13px;
+            font-weight: 400;
+            padding: 6px 10px;
+            color: #b2bec3;
+        }
+
+        .sidebar nav ul.subsections li a:hover {
+            background-color: #636e72;
+            color: #ffffff;
+        }
+
+        .sidebar nav ul.subsections li a.active {
+            background-color: #d63031;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px 60px;
+            overflow-y: auto;
+        }
+
+        .section {
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section h2 {
+            font-size: 32px;
+            color: #2d3436;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #d63031;
+        }
+
+        .section h3 {
+            font-size: 22px;
+            color: #636e72;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .section h4 {
+            font-size: 18px;
+            color: #636e72;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .screenshot-placeholder {
+            background-color: #ecf0f1;
+            border: 2px dashed #bdc3c7;
+            padding: 60px 20px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .info-box {
+            background-color: #f5f6fa;
+            border-left: 4px solid #636e72;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .info-box.warning {
+            background-color: #fff5f5;
+            border-left-color: #d63031;
+        }
+
+        .info-box.tip {
+            background-color: #f5f6fa;
+            border-left-color: #2d3436;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 45px;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #d63031;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th,
+        table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #dfe6e9;
+        }
+
+        table th {
+            background-color: #2d3436;
+            color: white;
+            font-weight: bold;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .header-image {
+            width: 100%;
+            max-width: 800px;
+            height: 200px;
+            background: linear-gradient(135deg, #2d3436 0%, #636e72 50%, #d63031 100%);
+            margin-bottom: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 42px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <h1>Zoho User Guide</h1>
+            <p class="subtitle">Comprehensive Documentation</p>
+            <nav>
+                <ul>
+                    <li class="has-subsections">
+                        <a href="#section1" class="active">
+                            1. Zoho Basics
+                            <span class="expand-icon">▶</span>
+                        </a>
+                        <ul class="subsections">
+                            <li><a href="#section1-login">Logging In</a></li>
+                            <li><a href="#section1-navigation">Webpage Navigation</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-subsections">
+                        <a href="#section2">
+                            2. Card Reader Setup
+                            <span class="expand-icon">▶</span>
+                        </a>
+                        <ul class="subsections">
+                            <li><a href="#section2-hardware">Hardware Requirements</a></li>
+                            <li><a href="#section2-installation">Installation Steps</a></li>
+                            <li><a href="#section2-troubleshooting">Troubleshooting</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-subsections">
+                        <a href="#section3">
+                            3. Create a Customer
+                            <span class="expand-icon">▶</span>
+                        </a>
+                        <ul class="subsections">
+                            <li><a href="#section3-creating">Creating New Customer</a></li>
+                            <li><a href="#section3-fields">Required Fields</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-subsections">
+                        <a href="#section4">
+                            4. Customer Features
+                            <span class="expand-icon">▶</span>
+                        </a>
+                        <ul class="subsections">
+                            <li><a href="#section4-profile">Customer Profile</a></li>
+                            <li><a href="#section4-contact">Contact Management</a></li>
+                            <li><a href="#section4-history">Transaction History</a></li>
+                            <li><a href="#section4-custom">Custom Fields</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-subsections">
+                        <a href="#section5">
+                            5. Customer Portals
+                            <span class="expand-icon">▶</span>
+                        </a>
+                        <ul class="subsections">
+                            <li><a href="#section5-what">What is a Portal?</a></li>
+                            <li><a href="#section5-enabling">Enabling Access</a></li>
+                            <li><a href="#section5-features">Portal Features</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-subsections">
+                        <a href="#section6">
+                            6. Create a Quote
+                            <span class="expand-icon">▶</span>
+                        </a>
+                        <ul class="subsections">
+                            <li><a href="#section6-creating">Creating a Quote</a></li>
+                            <li><a href="#section6-templates">Quote Templates</a></li>
+                            <li><a href="#section6-management">Quote Management</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-subsections">
+                        <a href="#section7">
+                            7. Create an Invoice
+                            <span class="expand-icon">▶</span>
+                        </a>
+                        <ul class="subsections">
+                            <li><a href="#section7-creating">Creating Invoice</a></li>
+                            <li><a href="#section7-converting">Converting Quote</a></li>
+                            <li><a href="#section7-recurring">Recurring Invoices</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-subsections">
+                        <a href="#section8">
+                            8. Collect Payments
+                            <span class="expand-icon">▶</span>
+                        </a>
+                        <ul class="subsections">
+                            <li><a href="#section8-methods">Payment Methods</a></li>
+                            <li><a href="#section8-recording">Recording Payment</a></li>
+                            <li><a href="#section8-card">Card Reader Payment</a></li>
+                            <li><a href="#section8-partial">Partial Payments</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-subsections">
+                        <a href="#section9">
+                            9. Reports Overview
+                            <span class="expand-icon">▶</span>
+                        </a>
+                        <ul class="subsections">
+                            <li><a href="#section9-available">Available Reports</a></li>
+                            <li><a href="#section9-generating">Generating Reports</a></li>
+                            <li><a href="#section9-custom">Custom Reports</a></li>
+                        </ul>
+                    </li>
+                    <li class="has-subsections">
+                        <a href="#section10">
+                            10. Accountant Overview
+                            <span class="expand-icon">▶</span>
+                        </a>
+                        <ul class="subsections">
+                            <li><a href="#section10-purchases">Purchases Management</a></li>
+                            <li><a href="#section10-banking">Banking Integration</a></li>
+                            <li><a href="#section10-filing">Filing & Compliance</a></li>
+                            <li><a href="#section10-chart">Chart of Accounts</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div class="header-image">
+                Zoho Documentation
+            </div>
+
+            <!-- SECTION 1: Zoho Basics -->
+            <section id="section1" class="section">
+                <h2>1. Zoho Basics - Logging In / Webpage Navigation</h2>
+
+                <h3 id="section1-login">Logging Into Zoho</h3>
+                <p>This section will cover the login process for accessing your Zoho account, including URL, credentials management, and initial setup.</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Zoho Login Page]
+                </div>
+
+                <h4>Step-by-Step Login Process</h4>
+                <ol class="step-list">
+                    <li><strong>Navigate to the login page:</strong> [URL and instructions will be added here]</li>
+                    <li><strong>Enter credentials:</strong> [Specific instructions for your company setup]</li>
+                    <li><strong>Two-factor authentication (if applicable):</strong> [Details to be added]</li>
+                    <li><strong>Dashboard overview:</strong> [What you see after logging in]</li>
+                </ol>
+
+                <div class="info-box tip">
+                    <strong>Tip:</strong> Bookmark the login page for quick access. [Additional tips will be added here]
+                </div>
+
+                <h3 id="section1-navigation">Webpage Navigation</h3>
+                <p>Understanding the Zoho interface layout and navigation structure.</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Zoho Dashboard Overview with labeled navigation elements]
+                </div>
+
+                <h4>Main Navigation Elements</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Element</th>
+                            <th>Location</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>[Navigation Item 1]</td>
+                            <td>[Location]</td>
+                            <td>[Purpose description]</td>
+                        </tr>
+                        <tr>
+                            <td>[Navigation Item 2]</td>
+                            <td>[Location]</td>
+                            <td>[Purpose description]</td>
+                        </tr>
+                        <tr>
+                            <td>[Navigation Item 3]</td>
+                            <td>[Location]</td>
+                            <td>[Purpose description]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- SECTION 2: Card Reader Setup -->
+            <section id="section2" class="section">
+                <h2>2. Setting Up Card Reader</h2>
+
+                <p>This section covers the complete process of setting up and configuring your card reader for payment processing within Zoho.</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Card Reader Hardware]
+                </div>
+
+                <h3 id="section2-hardware">Hardware Requirements</h3>
+                <p>[Details about the specific card reader model and requirements will be added here]</p>
+
+                <h3 id="section2-installation">Installation Steps</h3>
+                <ol class="step-list">
+                    <li><strong>Physical setup:</strong> [Connection instructions will be added]</li>
+                    <li><strong>Software installation:</strong> [Driver/app installation details]</li>
+                    <li><strong>Zoho integration:</strong> [How to connect reader to Zoho account]</li>
+                    <li><strong>Testing the connection:</strong> [Verification steps]</li>
+                </ol>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Card Reader Settings in Zoho]
+                </div>
+
+                <div class="info-box warning">
+                    <strong>Important:</strong> [Security considerations and best practices will be added here]
+                </div>
+
+                <h3 id="section2-troubleshooting">Troubleshooting Common Issues</h3>
+                <p>[Common problems and solutions will be documented here]</p>
+            </section>
+
+            <!-- SECTION 3: Create a Customer -->
+            <section id="section3" class="section">
+                <h2>3. How to Create a Customer</h2>
+
+                <p>Step-by-step instructions for adding new customers to your Zoho system.</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Customer Creation Page]
+                </div>
+
+                <h3 id="section3-creating">Creating a New Customer</h3>
+                <ol class="step-list">
+                    <li><strong>Access customer section:</strong> [Navigation instructions]</li>
+                    <li><strong>Click "New Customer":</strong> [Location and button details]</li>
+                    <li><strong>Fill in required fields:</strong> [Field descriptions below]</li>
+                    <li><strong>Add optional information:</strong> [Additional field details]</li>
+                    <li><strong>Save customer:</strong> [Confirmation and next steps]</li>
+                </ol>
+
+                <h3 id="section3-fields">Required Fields</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field Name</th>
+                            <th>Description</th>
+                            <th>Format/Requirements</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Customer Name</td>
+                            <td>[Description]</td>
+                            <td>[Format requirements]</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>[Description]</td>
+                            <td>[Format requirements]</td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td>[Description]</td>
+                            <td>[Format requirements]</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box tip">
+                    <strong>Best Practice:</strong> [Tips for customer data management will be added]
+                </div>
+            </section>
+
+            <!-- SECTION 4: Customer Features -->
+            <section id="section4" class="section">
+                <h2>4. Customer Features Overview</h2>
+
+                <p>A comprehensive overview of all customer-related features and capabilities within your Zoho setup.</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Customer Profile Page]
+                </div>
+
+                <h3 id="section4-profile">Customer Profile Features</h3>
+                <p>[Description of what information is available in customer profiles]</p>
+
+                <h3>Key Features</h3>
+                <h4 id="section4-contact">Contact Management</h4>
+                <p>[Details about managing customer contact information]</p>
+
+                <h4 id="section4-history">Transaction History</h4>
+                <p>[How to view and analyze customer transaction history]</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Customer Transaction History]
+                </div>
+
+                <h4>Notes and Comments</h4>
+                <p>[How to add and manage customer notes]</p>
+
+                <h4 id="section4-custom">Custom Fields</h4>
+                <p>[Information about custom fields specific to your company's setup]</p>
+
+                <div class="info-box">
+                    <strong>Note:</strong> [Important information about customer data and custom configurations]
+                </div>
+            </section>
+
+            <!-- SECTION 5: Customer Portals -->
+            <section id="section5" class="section">
+                <h2>5. Customer Portals Explained</h2>
+
+                <p>Understanding customer portals: what they are, how to enable them, and what customers can access.</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Customer Portal Settings]
+                </div>
+
+                <h3 id="section5-what">What is a Customer Portal?</h3>
+                <p>[Explanation of customer portal functionality and benefits]</p>
+
+                <h3 id="section5-enabling">Enabling Customer Portal Access</h3>
+                <ol class="step-list">
+                    <li><strong>Navigate to portal settings:</strong> [Location and access instructions]</li>
+                    <li><strong>Enable for specific customer:</strong> [Step-by-step process]</li>
+                    <li><strong>Configure permissions:</strong> [What customers can/cannot see]</li>
+                    <li><strong>Send portal invitation:</strong> [How customers receive access]</li>
+                </ol>
+
+                <h3 id="section5-features">Portal Features for Customers</h3>
+                <p>[List of what customers can do in their portal]</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Customer Portal View (customer perspective)]
+                </div>
+
+                <div class="info-box tip">
+                    <strong>Tip:</strong> [Best practices for managing customer portal access]
+                </div>
+            </section>
+
+            <!-- SECTION 6: Create a Quote -->
+            <section id="section6" class="section">
+                <h2>6. How to Create a Quote</h2>
+
+                <p>Complete guide to creating and sending quotes to customers.</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: New Quote Page]
+                </div>
+
+                <h3 id="section6-creating">Creating a Quote</h3>
+                <ol class="step-list">
+                    <li><strong>Access quotes section:</strong> [Navigation path]</li>
+                    <li><strong>Select customer:</strong> [How to choose existing or new customer]</li>
+                    <li><strong>Add items/services:</strong> [How to add line items]</li>
+                    <li><strong>Configure pricing:</strong> [Pricing, discounts, taxes]</li>
+                    <li><strong>Add terms and notes:</strong> [Custom terms and conditions]</li>
+                    <li><strong>Preview and send:</strong> [Final review and sending options]</li>
+                </ol>
+
+                <h3 id="section6-templates">Quote Templates</h3>
+                <p>[Information about using and customizing quote templates]</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Quote Template Selection]
+                </div>
+
+                <h3 id="section6-management">Quote Management</h3>
+                <p>[How to track quote status, follow up, and convert to invoices]</p>
+
+                <div class="info-box">
+                    <strong>Note:</strong> [Important details about quote expiration, versioning, etc.]
+                </div>
+            </section>
+
+            <!-- SECTION 7: Create an Invoice -->
+            <section id="section7" class="section">
+                <h2>7. How to Create an Invoice</h2>
+
+                <p>Step-by-step process for creating, customizing, and sending invoices.</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: New Invoice Page]
+                </div>
+
+                <h3 id="section7-creating">Creating an Invoice</h3>
+                <ol class="step-list">
+                    <li><strong>Start new invoice:</strong> [Where to begin]</li>
+                    <li><strong>Select customer:</strong> [Customer selection process]</li>
+                    <li><strong>Add items/services:</strong> [Line item details]</li>
+                    <li><strong>Apply discounts/taxes:</strong> [Pricing adjustments]</li>
+                    <li><strong>Set payment terms:</strong> [Due dates, payment methods]</li>
+                    <li><strong>Review and send:</strong> [Final checks and distribution]</li>
+                </ol>
+
+                <h3 id="section7-converting">Converting Quote to Invoice</h3>
+                <p>[How to convert an accepted quote into an invoice]</p>
+
+                <h3 id="section7-recurring">Recurring Invoices</h3>
+                <p>[Setting up automatic recurring billing]</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Recurring Invoice Settings]
+                </div>
+
+                <div class="info-box warning">
+                    <strong>Important:</strong> [Critical information about invoice numbering, tax compliance, etc.]
+                </div>
+            </section>
+
+            <!-- SECTION 8: Collect Payments -->
+            <section id="section8" class="section">
+                <h2>8. How to Collect Payments</h2>
+
+                <p>Complete guide to payment collection methods, recording payments, and managing payment history.</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Payment Collection Interface]
+                </div>
+
+                <h3 id="section8-methods">Payment Methods</h3>
+                <p>[Overview of available payment methods in your setup]</p>
+
+                <h3 id="section8-recording">Recording a Payment</h3>
+                <ol class="step-list">
+                    <li><strong>Access payment screen:</strong> [Navigation to payment recording]</li>
+                    <li><strong>Select invoice:</strong> [Which invoice is being paid]</li>
+                    <li><strong>Enter payment details:</strong> [Amount, method, date]</li>
+                    <li><strong>Process card payment (if applicable):</strong> [Card reader integration]</li>
+                    <li><strong>Confirm and record:</strong> [Finalize payment]</li>
+                </ol>
+
+                <h3 id="section8-card">Payment via Card Reader</h3>
+                <p>[Specific instructions for processing card payments]</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Card Payment Processing]
+                </div>
+
+                <h3 id="section8-partial">Partial Payments</h3>
+                <p>[How to handle partial payments and payment plans]</p>
+
+                <h3>Payment Receipts</h3>
+                <p>[Generating and sending payment receipts to customers]</p>
+
+                <div class="info-box tip">
+                    <strong>Tip:</strong> [Best practices for payment tracking and reconciliation]
+                </div>
+            </section>
+
+            <!-- SECTION 9: Reports Overview -->
+            <section id="section9" class="section">
+                <h2>9. Reports Overview</h2>
+
+                <p>Understanding and utilizing Zoho's reporting features for business insights.</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Reports Dashboard]
+                </div>
+
+                <h3 id="section9-available">Available Reports</h3>
+                <p>[Overview of key reports available in your Zoho setup]</p>
+
+                <h3>Common Reports</h3>
+
+                <h4>Sales Reports</h4>
+                <p>[Description of sales-related reports]</p>
+                <ul>
+                    <li>[Report type 1]</li>
+                    <li>[Report type 2]</li>
+                    <li>[Report type 3]</li>
+                </ul>
+
+                <h4>Customer Reports</h4>
+                <p>[Description of customer-related reports]</p>
+
+                <h4>Payment Reports</h4>
+                <p>[Description of payment tracking reports]</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Sample Report Output]
+                </div>
+
+                <h3 id="section9-generating">Generating a Report</h3>
+                <ol class="step-list">
+                    <li><strong>Access reports section:</strong> [Navigation path]</li>
+                    <li><strong>Select report type:</strong> [Choosing the right report]</li>
+                    <li><strong>Set date range and filters:</strong> [Customizing report parameters]</li>
+                    <li><strong>Generate and view:</strong> [Running the report]</li>
+                    <li><strong>Export options:</strong> [PDF, Excel, etc.]</li>
+                </ol>
+
+                <h3 id="section9-custom">Custom Reports</h3>
+                <p>[Information about custom reports configured for your company]</p>
+
+                <div class="info-box">
+                    <strong>Note:</strong> [Important notes about report scheduling and automation]
+                </div>
+            </section>
+
+            <!-- SECTION 10: Accountant Overview -->
+            <section id="section10" class="section">
+                <h2>10. Accountant Overview</h2>
+                <p><em>Purchases, Banking, Filing and Compliance</em></p>
+
+                <p>Comprehensive overview of accounting features, including purchases, banking integration, and compliance requirements.</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Accountant Dashboard]
+                </div>
+
+                <h3 id="section10-purchases">Purchases Management</h3>
+                <p>[Overview of how to manage purchases and expenses in Zoho]</p>
+
+                <h4>Recording Purchases</h4>
+                <ol class="step-list">
+                    <li><strong>Access purchases section:</strong> [Navigation]</li>
+                    <li><strong>Create new purchase:</strong> [Step-by-step]</li>
+                    <li><strong>Categorize expenses:</strong> [Expense categories]</li>
+                    <li><strong>Upload receipts:</strong> [Document management]</li>
+                </ol>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Purchase Entry Form]
+                </div>
+
+                <h3 id="section10-banking">Banking Integration</h3>
+                <p>[How banking is connected and managed in your Zoho setup]</p>
+
+                <h4>Bank Feeds</h4>
+                <p>[Automatic bank feed configuration and management]</p>
+
+                <h4>Bank Reconciliation</h4>
+                <p>[Process for reconciling bank statements]</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Bank Reconciliation Interface]
+                </div>
+
+                <h3 id="section10-filing">Filing and Compliance</h3>
+                <p>[Tax filing, compliance requirements, and reporting for accountants]</p>
+
+                <h4>Tax Management</h4>
+                <p>[How taxes are configured and tracked]</p>
+
+                <h4>End-of-Period Tasks</h4>
+                <p>[Monthly, quarterly, and annual accounting tasks]</p>
+
+                <h4>Accountant Access</h4>
+                <p>[How to provide access to external accountants if needed]</p>
+
+                <div class="info-box warning">
+                    <strong>Important:</strong> [Critical compliance information and deadlines]
+                </div>
+
+                <h3 id="section10-chart">Chart of Accounts</h3>
+                <p>[Overview of your customized chart of accounts]</p>
+
+                <div class="screenshot-placeholder">
+                    [Screenshot: Chart of Accounts]
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Handle expand/collapse icon clicks separately
+        document.querySelectorAll('.expand-icon').forEach(icon => {
+            icon.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation(); // Prevent the link click from firing
+
+                const parentLi = this.closest('li.has-subsections');
+                if (parentLi) {
+                    parentLi.classList.toggle('expanded');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Remove active class from all links
+                document.querySelectorAll('.sidebar a').forEach(link => {
+                    link.classList.remove('active');
+                });
+
+                // Add active class to clicked link
+                this.classList.add('active');
+
+                // Scroll to section
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Update active navigation on scroll
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const sections = document.querySelectorAll('.section, h3[id], h4[id]');
+                const navLinks = document.querySelectorAll('.sidebar a');
+
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (window.pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === '#' + current) {
+                        link.classList.add('active');
+
+                        // Expand parent section if clicking a subsection
+                        const parentLi = link.closest('li.has-subsections');
+                        if (parentLi) {
+                            parentLi.classList.add('expanded');
+                        }
+                    }
+                });
+            }, 100);
+        });
+
+        // Auto-expand the first section on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstSection = document.querySelector('.sidebar li.has-subsections');
+            if (firstSection) {
+                firstSection.classList.add('expanded');
+            }
+        });
+    </script>
+</body>
+</html>
