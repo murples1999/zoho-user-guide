@@ -340,16 +340,21 @@
 
         .header-image {
             width: 100%;
-            max-width: 280px;
+            max-width: 400px;
+            height: 120px;
             margin: 0 auto 40px auto;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
         .header-image img {
-            width: 100%;
-            height: auto;
+            width: auto;
+            height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            object-position: center;
             display: block;
         }
 
@@ -507,7 +512,7 @@
         <!-- Main Content Area -->
         <main class="main-content">
             <div class="header-image">
-                <img src="./Screenshots/Grey Logo.png" alt="Patterson Print Shops">
+                <img src="./Screenshots/Logo.png" alt="Patterson Print Shops">
             </div>
 
             <!-- SECTION 1: Zoho Basics -->
