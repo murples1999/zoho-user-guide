@@ -1436,7 +1436,17 @@
 
                 const parentLi = this.closest('li.has-subsections');
                 if (parentLi) {
-                    parentLi.classList.toggle('expanded');
+                    const isCurrentlyExpanded = parentLi.classList.contains('expanded');
+
+                    // Collapse all sections
+                    document.querySelectorAll('li.has-subsections').forEach(section => {
+                        section.classList.remove('expanded');
+                    });
+
+                    // If it wasn't expanded, expand it; otherwise leave it collapsed
+                    if (!isCurrentlyExpanded) {
+                        parentLi.classList.add('expanded');
+                    }
                 }
             });
         });
@@ -1453,6 +1463,17 @@
 
                 // Add active class to clicked link
                 this.classList.add('active');
+
+                // Collapse all sections first
+                document.querySelectorAll('li.has-subsections').forEach(section => {
+                    section.classList.remove('expanded');
+                });
+
+                // Expand parent section if this is a subsection
+                const parentLi = this.closest('li.has-subsections');
+                if (parentLi) {
+                    parentLi.classList.add('expanded');
+                }
 
                 // Scroll to section
                 const targetId = this.getAttribute('href');
@@ -1484,7 +1505,12 @@
                     if (link.getAttribute('href') === '#' + current) {
                         link.classList.add('active');
 
-                        // Expand parent section if clicking a subsection
+                        // Collapse all sections first
+                        document.querySelectorAll('li.has-subsections').forEach(section => {
+                            section.classList.remove('expanded');
+                        });
+
+                        // Expand parent section if this is a subsection
                         const parentLi = link.closest('li.has-subsections');
                         if (parentLi) {
                             parentLi.classList.add('expanded');
