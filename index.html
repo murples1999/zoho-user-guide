@@ -1500,15 +1500,15 @@
                     }
                 });
 
+                // Collapse all sections first
+                document.querySelectorAll('li.has-subsections').forEach(section => {
+                    section.classList.remove('expanded');
+                });
+
                 navLinks.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href') === '#' + current) {
                         link.classList.add('active');
-
-                        // Collapse all sections first
-                        document.querySelectorAll('li.has-subsections').forEach(section => {
-                            section.classList.remove('expanded');
-                        });
 
                         // Expand parent section if this is a subsection
                         const parentLi = link.closest('li.has-subsections');
